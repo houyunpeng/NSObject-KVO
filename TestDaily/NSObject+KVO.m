@@ -10,7 +10,9 @@
 #import <objc/runtime.h>
 #import "ObservationInfo.h"
 #import <objc/message.h>
-#define kPGKVOAssociatedObservers @"observerArrKey"
+#define hypKVOAssociatedObservers @"observerArrKey"
+#define hypKVOPrefix @"hyp_"
+
 
 @implementation NSObject (KVO)
 
@@ -29,7 +31,7 @@
     Class class = object_getClass(self);
     NSString* className = NSStringFromClass(class);
     
-    if(![className hasPrefix:@"hyp_"]){
+    if(![className hasPrefix:hypKVOPrefix]){
         class = [self makeKvoClassWithOriginalClassName:className];
         object_setClass(self, class);
     }
@@ -41,11 +43,11 @@
         class_addMethod(class, setterSel, (IMP)kvo_setter, types);
     }
     
-    NSMutableArray* observerArr = objc_getAssociatedObject(self, (__bridge const void *)(kPGKVOAssociatedObservers));
+    NSMutableArray* observerArr = objc_getAssociatedObject(self, (__bridge const void *)(hypKVOAssociatedObservers));
     
     if(!observerArr){
         observerArr = [[NSMutableArray alloc] init];
-        objc_setAssociatedObject(self, (__bridge const void *)(kPGKVOAssociatedObservers), observerArr, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        objc_setAssociatedObject(self, (__bridge const void *)(hypKVOAssociatedObservers), observerArr, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     
     ObservationInfo* info = [[ObservationInfo alloc] init];
@@ -58,51 +60,51 @@
     
 }
     
-    static void kvo_setter(id self,SEL _cmd,id newValue){
-        NSString* setterName = NSStringFromSelector(_cmd);
-        NSString* getterName = [self getterNameFromSetter:setterName];
-        if(!getterName){
-            NSAssert(NO, @"没有实现%@方法",getterName);
-        }
-        
-        id oldValue = [self valueForKey:getterName];
-        
-        struct objc_super superclazz = {
-            .receiver = self,
-            .super_class = class_getSuperclass(object_getClass(self))
-
-        };
-         void (*objc_msgSendSuperCasted)(void *, SEL, id) = (void *)objc_msgSendSuper;
-        objc_msgSendSuperCasted(&superclazz, _cmd, newValue);
-
-        NSMutableArray *observers = objc_getAssociatedObject(self, (__bridge const void *)(kPGKVOAssociatedObservers));
-        for (ObservationInfo *each in observers) {
-            if ([each.key isEqualToString:getterName]) {
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    each.block(self, getterName, oldValue, newValue);
-                });
-            }
-        }
+static void kvo_setter(id self,SEL _cmd,id newValue){
+    NSString* setterName = NSStringFromSelector(_cmd);
+    NSString* getterName = [self getterNameFromSetter:setterName];
+    if(!getterName){
+        NSAssert(NO, @"没有实现%@方法",getterName);
     }
     
-    -(NSString*)getterNameFromSetter:(NSString*)settername{
-        
-        if([settername hasPrefix:@"set"]){
-            NSString* methodString = [settername stringByReplacingOccurrencesOfString:@"set" withString:@""];
-            methodString = [methodString stringByReplacingOccurrencesOfString:@":" withString:@""];
-            
-            NSString* firstChar = [methodString substringToIndex:1];
-            methodString = [NSString stringWithFormat:@"%@%@",[firstChar lowercaseString],[methodString substringFromIndex:1]];
-            
-            return methodString;
+    id oldValue = [self valueForKey:getterName];
+    
+    struct objc_super superclazz = {
+        .receiver = self,
+        .super_class = class_getSuperclass(object_getClass(self))
+
+    };
+     void (*objc_msgSendSuperCasted)(void *, SEL, id) = (void *)objc_msgSendSuper;
+    objc_msgSendSuperCasted(&superclazz, _cmd, newValue);
+
+    NSMutableArray *observers = objc_getAssociatedObject(self, (__bridge const void *)(hypKVOAssociatedObservers));
+    for (ObservationInfo *each in observers) {
+        if ([each.key isEqualToString:getterName]) {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                each.block(self, getterName, oldValue, newValue);
+            });
         }
-        return [NSString stringWithFormat:@"get%@",[settername capitalizedString]];
     }
+}
+
+-(NSString*)getterNameFromSetter:(NSString*)settername{
+    
+    if([settername hasPrefix:@"set"]){
+        NSString* methodString = [settername stringByReplacingOccurrencesOfString:@"set" withString:@""];
+        methodString = [methodString stringByReplacingOccurrencesOfString:@":" withString:@""];
+        
+        NSString* firstChar = [methodString substringToIndex:1];
+        methodString = [NSString stringWithFormat:@"%@%@",[firstChar lowercaseString],[methodString substringFromIndex:1]];
+        
+        return methodString;
+    }
+    return [NSString stringWithFormat:@"get%@",[settername capitalizedString]];
+}
 
 -(void)h_removeObserver:(NSObject *)observer forKey:(NSString *)key
 {
     
-    NSMutableArray* observerArr = objc_getAssociatedObject(self, (__bridge const void *)(kPGKVOAssociatedObservers));
+    NSMutableArray* observerArr = objc_getAssociatedObject(self, (__bridge const void *)(hypKVOAssociatedObservers));
     
     ObservationInfo* observationInfo;
     for (ObservationInfo* obs in observerArr) {
@@ -116,59 +118,59 @@
     
 }
     
-    -(BOOL)hasSelector:(SEL)selector
-    {
-        NSString* oriSelString = NSStringFromSelector(selector);
-        unsigned int  count;
-        Method* methods = class_copyMethodList([self class], &count);
-        
-        for(int i = 0;i < count;i++){
-            
-            Method m = methods[i];
-            SEL sel = method_getName(m);
-            NSString* selString = NSStringFromSelector(sel);
-            if([selString isEqualToString:oriSelString]){
-                return YES;
-            }
-            
-        }
-        return NO;
-        
-    }
+-(BOOL)hasSelector:(SEL)selector
+{
+    NSString* oriSelString = NSStringFromSelector(selector);
+    unsigned int  count;
+    Method* methods = class_copyMethodList([self class], &count);
     
-    
-    -(Class)makeKvoClassWithOriginalClassName:(NSString*)class{
-        NSString* className = [NSString stringWithFormat:@"hyp_%@",class];
-        Class clazz = NSClassFromString(className);
-        if(clazz){
-            return clazz;
+    for(int i = 0;i < count;i++){
+        
+        Method m = methods[i];
+        SEL sel = method_getName(m);
+        NSString* selString = NSStringFromSelector(sel);
+        if([selString isEqualToString:oriSelString]){
+            return YES;
         }
         
-        Class oriClass = object_getClass(self);
-        Class kvoClass = objc_allocateClassPair(oriClass, className.UTF8String, 0);
-        Method classMethod = class_getClassMethod(oriClass, @selector(class));
-        
-        const char* types = method_getTypeEncoding(classMethod);
-        
-        Method methodClass = class_getInstanceMethod(kvoClass, @selector(class));
-        
-        
-        
-        class_addMethod(kvoClass, @selector(class), method_getImplementation(methodClass), types);
-        objc_registerClassPair(kvoClass);
-        return kvoClass;
-        
+    }
+    return NO;
+    
+}
+
+
+-(Class)makeKvoClassWithOriginalClassName:(NSString*)class{
+    NSString* className = [NSString stringWithFormat:@"%@%@",hypKVOPrefix,class];
+    Class clazz = NSClassFromString(className);
+    if(clazz){
+        return clazz;
     }
     
+    Class oriClass = object_getClass(self);
+    Class kvoClass = objc_allocateClassPair(oriClass, className.UTF8String, 0);
+    Method classMethod = class_getClassMethod(oriClass, @selector(class));
+    
+    const char* types = method_getTypeEncoding(classMethod);
+    
+    Method methodClass = class_getInstanceMethod(kvoClass, @selector(class));
     
     
     
+    class_addMethod(kvoClass, @selector(class), method_getImplementation(methodClass), types);
+    objc_registerClassPair(kvoClass);
+    return kvoClass;
     
-    
-    
-    -(NSString*) setterSELString:(NSString*)s
-    {
-        return [NSString stringWithFormat:@"set%@:",[s capitalizedString]];
-    }
-    
+}
+
+
+
+
+
+
+
+-(NSString*) setterSELString:(NSString*)s
+{
+    return [NSString stringWithFormat:@"set%@:",[s capitalizedString]];
+}
+
 @end

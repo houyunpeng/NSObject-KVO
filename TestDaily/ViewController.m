@@ -33,14 +33,14 @@
     NSLog(@"---dafadf");
 }
 
-    -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-    {
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
 //        _model.name = [_model.name stringByAppendingString:@"na"];
-        FIrstViewController* first = [[FIrstViewController alloc] init];
-        first.model = _model;
-        [self.navigationController pushViewController:first animated:YES];
-        
-    }
+    FIrstViewController* first = [[FIrstViewController alloc] init];
+    first.model = _model;
+    [self.navigationController pushViewController:first animated:YES];
+    
+}
     
     
 - (void)didReceiveMemoryWarning {
