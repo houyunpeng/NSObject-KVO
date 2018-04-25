@@ -74,6 +74,7 @@ static void kvo_setter(id self,SEL _cmd,id newValue){
         .super_class = class_getSuperclass(object_getClass(self))
 
     };
+  
      void (*objc_msgSendSuperCasted)(void *, SEL, id) = (void *)objc_msgSendSuper;
     objc_msgSendSuperCasted(&superclazz, _cmd, newValue);
 
@@ -129,6 +130,9 @@ static void kvo_setter(id self,SEL _cmd,id newValue){
         Method m = methods[i];
         SEL sel = method_getName(m);
         NSString* selString = NSStringFromSelector(sel);
+        
+        NSLog(@"对比两个函数%@和%@",selString,oriSelString);
+        
         if([selString isEqualToString:oriSelString]){
             return YES;
         }

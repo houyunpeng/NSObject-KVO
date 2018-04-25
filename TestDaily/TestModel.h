@@ -7,12 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "TestSubModel.h"
 @interface TestModel : NSObject
     
     
 @property(nonatomic,strong)NSString* name;
 @property(nonatomic,copy)NSString* des;
+    
+@property(nonatomic,strong)TestSubModel* model;
     
 
 @end

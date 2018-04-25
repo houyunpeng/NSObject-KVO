@@ -17,6 +17,8 @@
 		EF26C72C208DB0FC00F1D6F1 /* NSObject+KVO.m in Sources */ = {isa = PBXBuildFile; fileRef = EF26C72B208DB0FC00F1D6F1 /* NSObject+KVO.m */; };
 		EF26C72F208DBF2D00F1D6F1 /* ObservationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EF26C72E208DBF2D00F1D6F1 /* ObservationInfo.m */; };
 		EF26C732208DE24F00F1D6F1 /* FIrstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF26C731208DE24F00F1D6F1 /* FIrstViewController.m */; };
+		EF26C735208F3A2200F1D6F1 /* TestSubModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EF26C734208F3A2200F1D6F1 /* TestSubModel.m */; };
+		EF26C738208F3B5D00F1D6F1 /* NSObject+KVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EF26C737208F3B5D00F1D6F1 /* NSObject+KVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,10 @@
 		EF26C72E208DBF2D00F1D6F1 /* ObservationInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ObservationInfo.m; sourceTree = "<group>"; };
 		EF26C730208DE24F00F1D6F1 /* FIrstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FIrstViewController.h; sourceTree = "<group>"; };
 		EF26C731208DE24F00F1D6F1 /* FIrstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FIrstViewController.m; sourceTree = "<group>"; };
+		EF26C733208F3A2200F1D6F1 /* TestSubModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestSubModel.h; sourceTree = "<group>"; };
+		EF26C734208F3A2200F1D6F1 /* TestSubModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestSubModel.m; sourceTree = "<group>"; };
+		EF26C736208F3B5D00F1D6F1 /* NSObject+KVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+KVC.h"; sourceTree = "<group>"; };
+		EF26C737208F3B5D00F1D6F1 /* NSObject+KVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+KVC.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,10 +84,14 @@
 				EF26C731208DE24F00F1D6F1 /* FIrstViewController.m */,
 				EF26C72A208DB0FC00F1D6F1 /* NSObject+KVO.h */,
 				EF26C72B208DB0FC00F1D6F1 /* NSObject+KVO.m */,
+				EF26C736208F3B5D00F1D6F1 /* NSObject+KVC.h */,
+				EF26C737208F3B5D00F1D6F1 /* NSObject+KVC.m */,
 				EF26C72D208DBF2D00F1D6F1 /* ObservationInfo.h */,
 				EF26C72E208DBF2D00F1D6F1 /* ObservationInfo.m */,
 				EF26C7272089B8FF00F1D6F1 /* TestModel.h */,
 				EF26C7282089B8FF00F1D6F1 /* TestModel.m */,
+				EF26C733208F3A2200F1D6F1 /* TestSubModel.h */,
+				EF26C734208F3A2200F1D6F1 /* TestSubModel.m */,
 				EF26C7172089B8D000F1D6F1 /* Main.storyboard */,
 				EF26C71A2089B8DC00F1D6F1 /* Assets.xcassets */,
 				EF26C71C2089B8DC00F1D6F1 /* LaunchScreen.storyboard */,
@@ -163,8 +173,10 @@
 			files = (
 				EF26C732208DE24F00F1D6F1 /* FIrstViewController.m in Sources */,
 				EF26C7162089B8D000F1D6F1 /* ViewController.m in Sources */,
+				EF26C738208F3B5D00F1D6F1 /* NSObject+KVC.m in Sources */,
 				EF26C7212089B8DC00F1D6F1 /* main.m in Sources */,
 				EF26C72C208DB0FC00F1D6F1 /* NSObject+KVO.m in Sources */,
+				EF26C735208F3A2200F1D6F1 /* TestSubModel.m in Sources */,
 				EF26C7132089B8D000F1D6F1 /* AppDelegate.m in Sources */,
 				EF26C72F208DBF2D00F1D6F1 /* ObservationInfo.m in Sources */,
 				EF26C7292089B8FF00F1D6F1 /* TestModel.m in Sources */,

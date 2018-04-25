@@ -8,13 +8,14 @@
 
 #import "TestModel.h"
 
-
+#import "TestSubModel.h"
 
 @implementation TestModel
-@synthesize name;
-@synthesize des;
-    
-    
 
     
+//    -(void)setName:(NSString *)name
+//    {
+//        _name = name;
+//    }
+
 @end

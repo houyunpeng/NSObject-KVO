@@ -9,7 +9,10 @@
 #import "ViewController.h"
 #import "TestModel.h"
 #import "NSObject+KVO.h"
+#import "NSObject+KVC.h"
 #import "FIrstViewController.h"
+#import <objc/runtime.h>
+#import <objc/message.h>
 @interface ViewController ()
 {
     TestModel* _model;
@@ -21,10 +24,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _model = [[TestModel alloc] init];
-    _model.name = @"adfa";
-    [_model h_addObserver:self forKey:@"name" complete:^(id observedObject, NSString *observedKey, id oldValue, id newValue) {
-        NSLog(@"%@---%@-----%@----%@",observedObject,observedKey,oldValue,newValue);
-    }];
+    _model.name = @"hyp";
+    _model.model = [[TestSubModel alloc] init];
+    _model.model.name = @"abcd";
+
+    
+    
+    //自定义实现带有block返回的KVO
+//    [_model h_addObserver:self forKey:@"name" complete:^(id observedObject, NSString *observedKey, id oldValue, id newValue) {
+//        NSLog(@"%@---%@-----%@----%@",observedObject,observedKey,oldValue,newValue);
+//    }];
 //    [_model addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionNew context:nil];
 }
 
@@ -35,13 +44,32 @@
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-//        _model.name = [_model.name stringByAppendingString:@"na"];
-    FIrstViewController* first = [[FIrstViewController alloc] init];
-    first.model = _model;
-    [self.navigationController pushViewController:first animated:YES];
+//    FIrstViewController* first = [[FIrstViewController alloc] init];
+//    first.model = _model;
+//    [self.navigationController pushViewController:first animated:YES];
+    
+    
+  
+//    [_model setName:@"azzzzzz"];
+    
+    NSLog(@"1");
+
+//    [_model h_setValue:@"hyp" forKey:@"name"];
+    
+    int a = arc4random()%100;
+    
+    
+//    [_model h_setValue:[NSString stringWithFormat:@"hyp---%d",a] forKeyPath:@"model.name"];
+//    NSLog(@"_model.model.name=%@",_model.model.name);
+
+    NSString* name1 = [_model h_valueForKey:@"name"];
+    NSString* name2 = [_model h_valueForKeyPath:@"model.name"];
+    
+//    id obj = [_model valueForKey:@".cxx_destruct"];
+    NSLog(@"obj");
     
 }
-    
+
     
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

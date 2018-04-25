@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TestDaily/FIrstViewController.m"
-            timestampString = "546170183.699283"
+            timestampString = "546317756.217437"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "20"
@@ -26,7 +26,7 @@
                   moduleName = "TestDaily"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/houyunpeng/Desktop/TestDaily/TestDaily/FIrstViewController.m"
-                  timestampString = "546170183.747642"
+                  timestampString = "546317756.257192"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "20"
@@ -41,7 +41,7 @@
                   moduleName = "TestDaily"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/houyunpeng/Desktop/TestDaily/TestDaily/FIrstViewController.m"
-                  timestampString = "546170183.7529531"
+                  timestampString = "546317756.262464"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "21"
@@ -49,6 +49,22 @@
                   offsetFromSymbolStart = "132">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TestDaily/ViewController.m"
+            timestampString = "546317756.217557"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "-touchesBegan:withEvent:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
